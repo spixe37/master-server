@@ -1,4 +1,5 @@
-var config = require('./config.js');
-var mysql = require('mysql');
-var connection = mysql.createPool(config.db);
+const mysql = require('mysql');
+const config = require('./config');
+
+const connection = mysql.createPool(config.db);
 module.exports = connection;
