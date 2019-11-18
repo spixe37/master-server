@@ -3,6 +3,8 @@ const ipRegex = require('ip-port-regex');
 const config = require('./config');
 const funcs = require('./functions');
 
+const logger = require('./logger');
+
 const server = dgram.createSocket('udp4');
 
 const pStart = '\xFF\xFF\xFF\xFF\x66\x0A';
@@ -27,7 +29,8 @@ if (config.ms.boost_servers_enabled) {
 
 server.on('listening', () => {
   const address = server.address();
-  console.log(`MS listening on ${address.address}:${address.port}`);
+  // console.log(`MS listening on ${address.address}:${address.port}`);
+  logger.info(`MS listening on ${address.address}:${address.port}`);
 });
 
 server.on('message', (message, remote) => {

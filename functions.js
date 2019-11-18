@@ -4,6 +4,7 @@
 /* eslint-disable no-bitwise */
 /* eslint-disable no-mixed-operators */
 const db = require('./db');
+const logger = require('./logger');
 
 const funcs = {
   send_reply(p, r, s) {
@@ -22,7 +23,7 @@ const funcs = {
     // (err, bytes) =>
     s.send(reply, 0, reply.length, r.port, r.address, (err) => {
       if (err) {
-        console.error('Error sending OK buffer to client', err);
+        logger.error('Error sending OK buffer to client', err);
       }
     });
   },
@@ -38,7 +39,8 @@ const funcs = {
           for (i = 0; i < rows.length; i += 1) {
             r[r.length] = rows[i].addr;
           }
-          console.log(`Обновление списка обычных серверов. Всего: ${rows.length}`);
+          // console.log(`Обновление списка обычных серверов. Всего: ${rows.length}`);
+          logger.info(`Обновление списка обычных серверов. Всего: ${rows.length}`);
           callback(null, r);
         });
         break;
@@ -49,12 +51,12 @@ const funcs = {
           for (i = 0; i < rows.length; i += 1) {
             r[r.length] = rows[i].addr;
           }
-          console.log(`Обновление списка boost серверов. Всего: ${rows.length}`);
+          logger.info(`Обновление списка boost серверов. Всего: ${rows.length}`);
           callback(null, r);
         });
         break;
       default:
-        console.log('not ok');
+        logger.error('not ok');
         break;
     }
   },
